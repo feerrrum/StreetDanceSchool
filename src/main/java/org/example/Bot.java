@@ -37,7 +37,7 @@ public class Bot extends TelegramLongPollingBot {
         var chatId = update.getMessage().getChatId();
         SendMessage response = new SendMessage();
         response.setChatId(chatId);
-        response.setText("MEOW");
+        response.setText("life is meaningless");
         try {
             execute(response);
         } catch (TelegramApiException e) {
