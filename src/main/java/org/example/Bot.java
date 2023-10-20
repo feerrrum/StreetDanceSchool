@@ -45,6 +45,8 @@ public class Bot extends TelegramLongPollingBot {
             case ("/help"):
                 response.setText("help");
                 break;
+            case ("/jarungii?"):
+                response.setText("jarungii?");
             default:
                 response.setText("what??");
                 break;
