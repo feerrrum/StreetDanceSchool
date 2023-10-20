@@ -37,7 +37,19 @@ public class Bot extends TelegramLongPollingBot {
         var chatId = update.getMessage().getChatId();
         SendMessage response = new SendMessage();
         response.setChatId(chatId);
-        response.setText("life is meaningless");
+
+        switch (message.getText()) {
+            case ("/start"):
+                response.setText("start");
+                break;
+            case ("/help"):
+                response.setText("help");
+                break;
+            default:
+                response.setText("what??");
+                break;
+        }
+
         try {
             execute(response);
         } catch (TelegramApiException e) {
