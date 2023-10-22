@@ -37,16 +37,34 @@ public class Bot extends TelegramLongPollingBot {
         var chatId = update.getMessage().getChatId();
         SendMessage response = new SendMessage();
         response.setChatId(chatId);
+        Keyboards keyboard = new Keyboards();
+        keyboard.mainKeyboard(response);
 
         switch (message.getText()) {
-            case ("/start"):
-                response.setText("start");
+            case ("Записаться на занятие"):
+                response.setText("Список педагогов:");
+                keyboard.backKeyboard(response);
                 break;
-            case ("/help"):
-                response.setText("help");
+            case ("Личный кабинет"):
+                response.setText("я не знаю как менять клаву без отправки сообщений :(");
+                keyboard.userKeyboard(response);
                 break;
-            case ("/jarungii?"):
-                response.setText("jarungii?");
+            case ("Расписание"):
+                response.setText("*календарь с расписанием*");
+                keyboard.backKeyboard(response);
+                break;
+            case ("Абонемент"):
+                response.setText("У вас осталось 0 занятий");
+                keyboard.paymentKeyboard(response);
+                break;
+            case ("Продлить"):
+                response.setText("Оплатить");
+                keyboard.backKeyboard(response);
+                break;
+            case ("Назад"):
+                response.setText("Назад");
+                keyboard.mainKeyboard(response);
+                break;
             default:
                 response.setText("what??");
                 break;
