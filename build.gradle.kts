@@ -10,6 +10,8 @@ repositories {
 }
 
 dependencies {
+    implementation ("mysql:mysql-connector-java:8.0.23")
+    implementation ("org.telegram:telegrambots:5.0.1")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation("org.telegram:telegrambots:6.8.0")
