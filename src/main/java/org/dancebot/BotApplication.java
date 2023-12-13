@@ -1,8 +1,6 @@
 package org.dancebot;
 
-import org.dancebot.commands.ButtonHelper;
-import org.dancebot.commands.SimpleTextCommand;
-import org.dancebot.commands.TextCommandHandler;
+import org.dancebot.commands.*;
 import org.dancebot.telegram.StreetDanceBot;
 import org.dancebot.users.UserState;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
@@ -23,11 +21,20 @@ public class BotApplication {
         var bot = new StreetDanceBot(token, name);
 
         var textHandler = new TextCommandHandler();
-        textHandler.addCommand(new SimpleTextCommand(UserState.NEW_BEE, "Р­С‚Рѕ Р±РѕС‚РёРє :3",
-                ButtonHelper.newBeeStateButtons,
-                (s, t) -> s.setState(UserState.CHOOSING)));
+        textHandler.addCommand(new SimpleTextCommand(UserState.NEW_BEE, "Это ботик :3",
+                ButtonHelper.notOnRecordStateButtons,
+                (s, t) -> s.setState(UserState.NOT_ON_RECORD)));
         bot.addTextHandler(textHandler);
 
+        var buttonHandler = new TextCommandHandler();
+        buttonHandler.addCommand(new ShowMentorsCommand());
+        buttonHandler.addCommand(new SimpleButtonReadyStateCommand("Записаться на занятие",
+                "Список",
+                ButtonHelper.backButtons,
+                (s, t) -> s.setState(UserState.CHOOSING)));
+        buttonHandler.addCommand(new BackCommand());
+
+        bot.addButtonHandler(buttonHandler);
 
         telegramBotsApi.registerBot(bot);
     }

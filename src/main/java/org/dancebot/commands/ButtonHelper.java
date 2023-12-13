@@ -3,7 +3,7 @@ package org.dancebot.commands;
 import java.util.List;
 
 public interface ButtonHelper {
-    public static List<String> backButtons = List.of("РќР°Р·Р°Рґ");
-    public static List<String> newBeeStateButtons = List.of("Р—Р°РїРёСЃР°С‚СЊСЃСЏ РЅР° Р·Р°РЅСЏС‚РёРµ");
-    public static List<String> onRecordStateButtons = List.of("Р—Р°РїРёСЃР°С‚СЊСЃСЏ РЅР° Р·Р°РЅСЏС‚РёРµ", "Р›РёС‡РЅС‹Р№ РєР°Р±РёРЅРµС‚");
+    public static List<String> backButtons = List.of("Назад");
+    public static List<String> notOnRecordStateButtons = List.of("Записаться на занятие");
+    public static List<String> onRecordStateButtons = List.of("Записаться на занятие", "Личный кабинет");
 }

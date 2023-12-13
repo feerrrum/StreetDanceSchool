@@ -4,6 +4,8 @@ package org.dancebot.telegram;
 import org.dancebot.commands.CommandResult;
 import org.dancebot.commands.TextCommandHandler;
 import org.dancebot.users.UserProvider;
+import org.dancebot.users.UserSession;
+import org.dancebot.users.UserState;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -32,10 +34,14 @@ public class StreetDanceBot extends TelegramLongPollingBot {
             var message = update.getMessage();
             var chatId = update.getMessage().getChatId();
             var session = UserProvider.getInstance().findUserById(new TelegramUserId(chatId));
-            if (textHandler != null) {
+            if (buttonHandler != null && !session.getState().equals(UserState.NEW_BEE)) {
+                var result = buttonHandler.processCommand(session, message.getText());
+                response(result, chatId);
+            } else if (textHandler != null) {
                 var result = textHandler.processCommand(session, message.getText());
                 response(result, chatId);
             }
+
         }
         if (update.hasCallbackQuery()) {
             var callbackQuery = update.getCallbackQuery();
