@@ -21,14 +21,14 @@ public class BotApplication {
 
     public static void main(String[] args) throws TelegramApiException, IOException {
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
-        var data = Files.readAllLines(new File("C:\\Users\\irina\\id.txt").toPath());
+        var data = Files.readAllLines(new File("C:\\Users\\tanno\\id.txt").toPath());
         String token = data.get(0);
         var name = data.get(1);
         var bot = new StreetDanceBot(token, name);
 
         var textHandler = new TextCommandHandler();
 
-        textHandler.addCommand(new SimpleTextCommand(UserState.NEW_BEE, "Это ботик :3",
+        textHandler.addCommand(new SimpleTextCommand(UserState.NEW_BEE, "это ботик :3",
                 ButtonHelper.notOnRecordStateButtons,
                 (s, t) -> s.setState(UserState.NOT_ON_RECORD)));
         bot.addTextHandler(textHandler);
@@ -36,27 +36,13 @@ public class BotApplication {
         var buttonHandler = new TextCommandHandler();
         buttonHandler.addCommand(new ShowMentorsCommand());
         buttonHandler.addCommand(new SimpleButtonReadyStateCommand("Записаться на занятие",
-                "Список",
+                "??????",
                 ButtonHelper.backButtons,
                 (s, t) -> s.setState(UserState.CHOOSING)));
         buttonHandler.addCommand(new BackCommand());
 
         bot.addButtonHandler(buttonHandler);
-        try (Connection connection = DatabaseManager.getConnection()) {
-            // Пример выполнения запроса к базе данных
-            String query = "SELECT * FROM sds_table_1";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()) {
-                        // Обработка результатов запроса
-                        String dataSQL = resultSet.getString("info");
-                        // Дальнейшая обработка данных
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
 
         telegramBotsApi.registerBot(bot);
     }
