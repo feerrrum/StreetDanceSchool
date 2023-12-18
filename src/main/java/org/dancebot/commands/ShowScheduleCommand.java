@@ -15,7 +15,7 @@ public class ShowScheduleCommand implements TextCommand{
 
     @Override
     public boolean canBeApply(UserSession session, String text) {
-        return "Расписание".equals(text) && session.getState().equals(UserState.ON_RECORD);
+        return "Р Р°СЃРїРёСЃР°РЅРёРµ".equals(text) && session.getState().equals(UserState.ON_RECORD);
     }
 
     @Override
@@ -23,6 +23,6 @@ public class ShowScheduleCommand implements TextCommand{
         if (dbHandler.isOnRecord(session.getId())) {
             return new CommandResult(dbHandler.getSchedule(session.getId()));
         }
-        return new CommandResult("Вы ни к кому не записаны", ButtonHelper.onRecordStateButtons);
+        return new CommandResult("Р’С‹ РЅРё Рє РєРѕРјСѓ РЅРµ Р·Р°РїРёСЃР°РЅС‹", ButtonHelper.onRecordStateButtons);
     }
 }
