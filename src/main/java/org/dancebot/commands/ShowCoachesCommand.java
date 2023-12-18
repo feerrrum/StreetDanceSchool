@@ -15,7 +15,7 @@ public class ShowCoachesCommand implements TextCommand{
 
     @Override
     public boolean canBeApply(UserSession session, String text) {
-        return "Записаться на занятие".equals(text) && session.getState().equals(UserState.ON_RECORD);
+        return "Р—Р°РїРёСЃР°С‚СЊСЃСЏ РЅР° Р·Р°РЅСЏС‚РёРµ".equals(text) && session.getState().equals(UserState.ON_RECORD);
     }
 
     @Override
