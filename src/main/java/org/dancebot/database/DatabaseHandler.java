@@ -20,8 +20,9 @@ public class DatabaseHandler {
     private static List<List<String>> coaches = null;
 
     private final Statement stmt;
+    private static DatabaseHandler instance = null;
 
-    public DatabaseHandler() throws IOException, SQLException {
+    private DatabaseHandler() throws IOException, SQLException {
         var data = Files.readAllLines(new File("C:\\Users\\irina\\db.txt").toPath());
         var url = data.get(0);
         var user = data.get(1);
@@ -29,23 +30,25 @@ public class DatabaseHandler {
         Connection conn = DriverManager.getConnection(url, user, password);
         this.stmt = conn.createStatement();
         System.out.println("Connected successfully");
+    }
 
-
+    public static DatabaseHandler getInstance() throws SQLException, IOException {
+        if (instance == null) {
+            instance = new DatabaseHandler();
+        }
+        return instance;
     }
 
     public boolean isOnRecord(String id) throws SQLException {
         var exist = stmt.executeQuery("SELECT EXISTS" +
                 "(SELECT * FROM " + table +" WHERE " + idColumn + "=" + id + ")");
         exist.next();
-
         return exist.getInt(1) != 0;
     }
     public boolean hasThatCoach(String userId, String coachId) throws SQLException {
-
         var exist = stmt.executeQuery("SELECT EXISTS" +
                 "(SELECT * FROM " + table +" WHERE " + idColumn + "=" + userId + " AND " + coachColumn + "=" + coachId + ")");
         exist.next();
-
         return exist.getInt(1) != 0;
     }
 
@@ -96,5 +99,15 @@ public class DatabaseHandler {
             i++;
         }
         return nicks;
+    }
+    public List<String> getSched(String userId) throws SQLException {
+        List<String> sched = new ArrayList<>();
+        var rs = stmt.executeQuery("SELECT * FROM " + table + " WHERE " + idColumn + "=" + userId);
+        getCoaches();
+        while (rs.next()) {
+            var index = Integer.parseInt(rs.getString("coach_id")) - 1;
+            sched.add(coaches.get(index).get(0) + ":\n\n" + coaches.get(index).get(2));
+        }
+        return sched;
     }
 }

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class ChooseCoachCommand implements TextCommand{
-    DatabaseHandler dbHandler = new DatabaseHandler();
+    DatabaseHandler dbHandler = DatabaseHandler.getInstance();
 
     public ChooseCoachCommand() throws SQLException, IOException {
     }
@@ -22,10 +22,10 @@ public class ChooseCoachCommand implements TextCommand{
     public CommandResult execute(UserSession session, String text) throws SQLException {
         session.setState(UserState.ON_RECORD);
         if (dbHandler.hasThatCoach(session.getId(), text)) {
-            return new CommandResult("no", ButtonHelper.editButtons);
+            return new CommandResult("no", ButtonHelper.onRecordStateButtons);
         }
         dbHandler.addCoach(session.getId(), text);
-        return new CommandResult("Поздравляю!\nВы записаны",
+        return new CommandResult("Поздравляю!\nВы записаны :)",
                 ButtonHelper.onRecordStateButtons);
     }
 }

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class PreDeleteCommand implements TextCommand{
-    DatabaseHandler dbHandler = new DatabaseHandler();
+    DatabaseHandler dbHandler = DatabaseHandler.getInstance();
 
     public PreDeleteCommand() throws SQLException, IOException {
     }

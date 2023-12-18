@@ -10,6 +10,9 @@ public class CommandResult {
     public CommandResult(String result) {
         this.result = result;
     }
+    public CommandResult(List<String> results) {
+        this.multipleResults = results;
+    }
     public CommandResult(String result, List<String> buttons) {
         this.result = result;
         this.buttons = buttons;

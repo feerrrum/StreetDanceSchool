@@ -7,20 +7,22 @@ import org.dancebot.users.UserState;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class ShowMentorsCommand implements TextCommand{
+public class ShowScheduleCommand implements TextCommand{
     DatabaseHandler dbHandler = DatabaseHandler.getInstance();
 
-    public ShowMentorsCommand() throws SQLException, IOException {
+    public ShowScheduleCommand() throws SQLException, IOException {
     }
 
     @Override
     public boolean canBeApply(UserSession session, String text) {
-        return "Записаться на занятие".equals(text) && session.getState().equals(UserState.ON_RECORD);
+        return "Расписание".equals(text) && session.getState().equals(UserState.ON_RECORD);
     }
 
     @Override
     public CommandResult execute(UserSession session, String text) throws SQLException {
-        session.setState(UserState.CHOOSING);
-        return new CommandResult(dbHandler.getCards(), ButtonHelper.coachButtons);
+        if (dbHandler.isOnRecord(session.getId())) {
+            return new CommandResult(dbHandler.getSched(session.getId()));
+        }
+        return new CommandResult("нет", ButtonHelper.onRecordStateButtons);
     }
 }

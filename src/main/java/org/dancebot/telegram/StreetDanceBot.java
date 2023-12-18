@@ -100,8 +100,6 @@ public class StreetDanceBot extends TelegramLongPollingBot {
         }
     }
 
-
-
     private static ReplyKeyboardMarkup getReplyKeyboardMarkup(CommandResult result) {
         ReplyKeyboardMarkup markupReply = new ReplyKeyboardMarkup();
         List<KeyboardRow> rows = new ArrayList<>();

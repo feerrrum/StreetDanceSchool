@@ -22,15 +22,15 @@ public class BotApplication {
         var name = data.get(1);
         var bot = new StreetDanceBot(token, name);
 
-        var dbHandler = new DatabaseHandler();
+        var dbHandler = DatabaseHandler.getInstance();
         bot.addDbHandler(dbHandler);
-
 
         var textHandler = new TextCommandHandler();
         textHandler.addCommand(new SimpleTextCommand(UserState.NOT_ON_RECORD,
                 dbHandler.getCards(),
                 ButtonHelper.coachButtons,
                 (s, t) -> s.setState(UserState.CHOOSING)));
+        textHandler.addCommand(new ShowScheduleCommand());
         textHandler.addCommand(new EditCommand());
         textHandler.addCommand(new ShowMentorsCommand());
         textHandler.addCommand(new PreDeleteCommand());
@@ -40,7 +40,6 @@ public class BotApplication {
         var buttonHandler = new TextCommandHandler();
         buttonHandler.addCommand(new ChooseCoachCommand());
         bot.addButtonHandler(buttonHandler);
-
 
         telegramBotsApi.registerBot(bot);
     }

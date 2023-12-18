@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class DeleteCommand implements TextCommand{
-    DatabaseHandler dbHandler = new DatabaseHandler();
+    DatabaseHandler dbHandler = DatabaseHandler.getInstance();
 
     public DeleteCommand() throws SQLException, IOException {
     }
