@@ -6,11 +6,11 @@ import org.dancebot.users.UserState;
 public class EditCommand implements TextCommand{
     @Override
     public boolean canBeApply(UserSession session, String text) {
-        return session.getState().equals(UserState.ON_RECORD) && "Изменить".equals(text);
+        return session.getState().equals(UserState.ON_RECORD) && "РР·РјРµРЅРёС‚СЊ".equals(text);
     }
 
     @Override
     public CommandResult execute(UserSession session, String text) {
-        return new CommandResult("Что хотите сделать?", ButtonHelper.editButtons);
+        return new CommandResult("Р§С‚Рѕ С…РѕС‚РёС‚Рµ СЃРґРµР»Р°С‚СЊ?", ButtonHelper.editButtons);
     }
 }
