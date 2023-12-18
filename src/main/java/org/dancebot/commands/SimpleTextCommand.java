@@ -22,6 +22,11 @@ public class SimpleTextCommand implements TextCommand {
         this.result = new CommandResult(resultText, buttons);
         this.action = action;
     }
+    public SimpleTextCommand(UserState acceptableState, List<String> results, List<String> buttons, BiConsumer<UserSession, String> action) {
+        this.acceptableState = acceptableState;
+        this.result = new CommandResult(results, buttons);
+        this.action = action;
+    }
     public SimpleTextCommand(UserState acceptableState, String resultText, UserState newState) {
         this.acceptableState = acceptableState;
         this.result = new CommandResult(resultText);

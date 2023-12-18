@@ -1,13 +1,19 @@
 package org.dancebot.users;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserSessionHandler implements UserSession{
     private final UserId id;
-    private UserState state = UserState.NEW_BEE;
-
+    private UserState state = UserState.NOT_ON_RECORD;
     UserSessionHandler(UserId id) {
         this.id = id;
     }
-
+    @Override
+    public String getId() {
+        return String.valueOf(id.getId());
+    }
     @Override
     public UserState getState() {
         return state;

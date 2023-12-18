@@ -6,57 +6,43 @@ import org.dancebot.users.UserState;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
-import org.dancebot.database.DatabaseManager;
+import org.dancebot.database.DatabaseHandler;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class BotApplication {
 
-    public static void main(String[] args) throws TelegramApiException, IOException {
+    public static void main(String[] args) throws TelegramApiException, IOException, SQLException {
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
         var data = Files.readAllLines(new File("C:\\Users\\irina\\id.txt").toPath());
         String token = data.get(0);
         var name = data.get(1);
         var bot = new StreetDanceBot(token, name);
 
-        var textHandler = new TextCommandHandler();
+        var dbHandler = new DatabaseHandler();
+        bot.addDbHandler(dbHandler);
 
-        textHandler.addCommand(new SimpleTextCommand(UserState.NEW_BEE, "Это ботик :3",
-                ButtonHelper.notOnRecordStateButtons,
-                (s, t) -> s.setState(UserState.NOT_ON_RECORD)));
+        var textHandler = new TextCommandHandler();
+        textHandler.addCommand(new SimpleTextCommand(UserState.NOT_ON_RECORD,
+                dbHandler.getCards(),
+                ButtonHelper.coachButtons,
+                (s, t) -> s.setState(UserState.CHOOSING)));
+        textHandler.addCommand(new EditCommand());
+        textHandler.addCommand(new ShowMentorsCommand());
+        textHandler.addCommand(new PreDeleteCommand());
+        textHandler.addCommand(new DeleteCommand());
         bot.addTextHandler(textHandler);
 
-        var buttonHandler = new TextCommandHandler();
-        buttonHandler.addCommand(new ShowMentorsCommand());
-        buttonHandler.addCommand(new SimpleButtonReadyStateCommand("Записаться на занятие",
-                "Список",
-                ButtonHelper.backButtons,
-                (s, t) -> s.setState(UserState.CHOOSING)));
-        buttonHandler.addCommand(new BackCommand());
 
+
+        var buttonHandler = new TextCommandHandler();
+        buttonHandler.addCommand(new ChooseCoachCommand());
         bot.addButtonHandler(buttonHandler);
-        try (Connection connection = DatabaseManager.getConnection()) {
-            // Пример выполнения запроса к базе данных
-            String query = "SELECT * FROM sds_table_1";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()) {
-                        // Обработка результатов запроса
-                        String dataSQL = resultSet.getString("info");
-                        // Дальнейшая обработка данных
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+
 
         telegramBotsApi.registerBot(bot);
     }

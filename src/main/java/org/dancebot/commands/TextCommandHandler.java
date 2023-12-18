@@ -2,6 +2,7 @@ package org.dancebot.commands;
 
 import org.dancebot.users.UserSession;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,13 @@ public class TextCommandHandler {
     }
     public CommandResult processCommand(UserSession session, String text) {
         var command = commands.stream().filter(c -> c.canBeApply(session, text)).findFirst();
-        var result = command.map(c -> c.execute(session, text));
+        var result = command.map(c -> {
+            try {
+                return c.execute(session, text);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
         return result.orElse(error);
     }
 }

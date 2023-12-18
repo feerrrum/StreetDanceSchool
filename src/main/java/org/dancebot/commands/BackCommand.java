@@ -14,6 +14,7 @@ public class BackCommand implements TextCommand{
 
     @Override
     public CommandResult execute(UserSession session, String text) {
-        return new CommandResult("Назад", ButtonHelper.onRecordStateButtons);
+        return new CommandResult("Назад",
+                session.getState().equals(UserState.ON_RECORD) ? ButtonHelper.onRecordStateButtons : ButtonHelper.notOnRecordStateButtons);
     }
 }

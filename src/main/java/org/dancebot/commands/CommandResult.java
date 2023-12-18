@@ -3,7 +3,8 @@ package org.dancebot.commands;
 import java.util.List;
 
 public class CommandResult {
-    private final String result;
+    private String result;
+    private List<String> multipleResults;
     private List<String> buttons;
 
     public CommandResult(String result) {
@@ -13,8 +14,18 @@ public class CommandResult {
         this.result = result;
         this.buttons = buttons;
     }
+    public CommandResult(List<String> results, List<String> buttons) {
+        this.multipleResults = results;
+        this.buttons = buttons;
+    }
     public String getResult() {
         return result;
+    }
+    public void setResult(String result) {
+        this.result = result;
+    }
+    public List<String> getMultipleResults() {
+        return multipleResults;
     }
     public List<String> getButtons() {
         return buttons;
