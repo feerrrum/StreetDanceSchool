@@ -25,6 +25,7 @@ public class BotApplication {
         var dbHandler = new DatabaseHandler();
         bot.addDbHandler(dbHandler);
 
+
         var textHandler = new TextCommandHandler();
         textHandler.addCommand(new SimpleTextCommand(UserState.NOT_ON_RECORD,
                 dbHandler.getCards(),
@@ -36,12 +37,9 @@ public class BotApplication {
         textHandler.addCommand(new DeleteCommand());
         bot.addTextHandler(textHandler);
 
-
-
         var buttonHandler = new TextCommandHandler();
         buttonHandler.addCommand(new ChooseCoachCommand());
         bot.addButtonHandler(buttonHandler);
-
 
 
         telegramBotsApi.registerBot(bot);

@@ -84,6 +84,7 @@ public class StreetDanceBot extends TelegramLongPollingBot {
                 } catch (TelegramApiException e) {
                     throw new RuntimeException(e);
                 }
+                i++;
             }
         } else {
             if (result.hasButtons()) {
@@ -119,7 +120,7 @@ public class StreetDanceBot extends TelegramLongPollingBot {
         for (String text : result.getButtons()) {
             var button = new InlineKeyboardButton();
             button.setText(text);
-            button.setCallbackData(String.valueOf(result.getResult().charAt(0)));
+            button.setCallbackData(result.getResult());
             rowInline.add(button);
         }
         rowsInline.add(rowInline);

@@ -13,7 +13,6 @@ public class SimpleButtonReadyStateCommand extends SimpleTextCommand{
         super(acceptableState, resultText, action);
         this.data = data;
     }
-
     public SimpleButtonReadyStateCommand(String data, String resultText, List<String> buttons, BiConsumer<UserSession, String> action) {
         super(UserState.CHOOSING, resultText, buttons, action);
         this.data = data;
