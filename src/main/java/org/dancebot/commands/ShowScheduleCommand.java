@@ -21,8 +21,8 @@ public class ShowScheduleCommand implements TextCommand{
     @Override
     public CommandResult execute(UserSession session, String text) throws SQLException {
         if (dbHandler.isOnRecord(session.getId())) {
-            return new CommandResult(dbHandler.getSched(session.getId()));
+            return new CommandResult(dbHandler.getSchedule(session.getId()));
         }
-        return new CommandResult("нет", ButtonHelper.onRecordStateButtons);
+        return new CommandResult("Вы ни к кому не записаны", ButtonHelper.onRecordStateButtons);
     }
 }

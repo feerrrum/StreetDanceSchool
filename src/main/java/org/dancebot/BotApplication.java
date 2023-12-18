@@ -32,7 +32,7 @@ public class BotApplication {
                 (s, t) -> s.setState(UserState.CHOOSING)));
         textHandler.addCommand(new ShowScheduleCommand());
         textHandler.addCommand(new EditCommand());
-        textHandler.addCommand(new ShowMentorsCommand());
+        textHandler.addCommand(new ShowCoachesCommand());
         textHandler.addCommand(new PreDeleteCommand());
         textHandler.addCommand(new DeleteCommand());
         bot.addTextHandler(textHandler);

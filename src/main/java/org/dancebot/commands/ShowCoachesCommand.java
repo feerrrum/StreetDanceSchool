@@ -7,10 +7,10 @@ import org.dancebot.users.UserState;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class ShowMentorsCommand implements TextCommand{
+public class ShowCoachesCommand implements TextCommand{
     DatabaseHandler dbHandler = DatabaseHandler.getInstance();
 
-    public ShowMentorsCommand() throws SQLException, IOException {
+    public ShowCoachesCommand() throws SQLException, IOException {
     }
 
     @Override

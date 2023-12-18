@@ -25,6 +25,6 @@ public class DeleteCommand implements TextCommand{
             dbHandler.deleteCoach(session.getId(), coachId);
             return new CommandResult("Успешно", ButtonHelper.onRecordStateButtons);
         }
-        return new CommandResult("bebebe", ButtonHelper.onRecordStateButtons);
+        return new CommandResult("Не является вашим тренером", ButtonHelper.onRecordStateButtons);
     }
 }

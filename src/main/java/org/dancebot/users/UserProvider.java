@@ -1,5 +1,6 @@
 package org.dancebot.users;
 
+
 public interface UserProvider {
     class Helper {
         private static final UserProvider instance = new UserProviderHandler();

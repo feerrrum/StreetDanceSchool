@@ -5,12 +5,7 @@ import org.dancebot.users.UserId;
 import java.util.Objects;
 
 
-public class TelegramUserId implements UserId {
-    private final Long id;
-
-    public TelegramUserId(Long id){
-        this.id = id;
-    }
+public record TelegramUserId(Long id) implements UserId {
 
     @Override
     public boolean equals(Object o) {
@@ -20,11 +15,4 @@ public class TelegramUserId implements UserId {
         return Objects.equals(id, that.id);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-    public Long getId() {
-        return id;
-    }
 }

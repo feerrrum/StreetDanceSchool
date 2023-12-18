@@ -22,7 +22,7 @@ public class ChooseCoachCommand implements TextCommand{
     public CommandResult execute(UserSession session, String text) throws SQLException {
         session.setState(UserState.ON_RECORD);
         if (dbHandler.hasThatCoach(session.getId(), text)) {
-            return new CommandResult("no", ButtonHelper.onRecordStateButtons);
+            return new CommandResult("Вы уже записаны к этому тренеру", ButtonHelper.onRecordStateButtons);
         }
         dbHandler.addCoach(session.getId(), text);
         return new CommandResult("Поздравляю!\nВы записаны :)",

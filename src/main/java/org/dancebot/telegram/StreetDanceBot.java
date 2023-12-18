@@ -5,7 +5,6 @@ import org.dancebot.commands.CommandResult;
 import org.dancebot.commands.TextCommandHandler;
 import org.dancebot.database.DatabaseHandler;
 import org.dancebot.users.UserProvider;
-import org.dancebot.users.UserSession;
 import org.dancebot.users.UserState;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -103,11 +102,11 @@ public class StreetDanceBot extends TelegramLongPollingBot {
     private static ReplyKeyboardMarkup getReplyKeyboardMarkup(CommandResult result) {
         ReplyKeyboardMarkup markupReply = new ReplyKeyboardMarkup();
         List<KeyboardRow> rows = new ArrayList<>();
-        KeyboardRow row = new KeyboardRow();
         for (String text : result.getButtons()) {
+            KeyboardRow row = new KeyboardRow();
             row.add(new KeyboardButton(text));
+            rows.add(row);
         }
-        rows.add(row);
         markupReply.setKeyboard(rows);
         return markupReply;
     }

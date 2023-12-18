@@ -1,9 +1,6 @@
 package org.dancebot.users;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class UserSessionHandler implements UserSession{
     private final UserId id;
     private UserState state = UserState.NOT_ON_RECORD;
@@ -12,7 +9,7 @@ public class UserSessionHandler implements UserSession{
     }
     @Override
     public String getId() {
-        return String.valueOf(id.getId());
+        return String.valueOf(id.id());
     }
     @Override
     public UserState getState() {

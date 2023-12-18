@@ -6,17 +6,9 @@ import java.nio.file.Files;
 import java.sql.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class DatabaseHandler {
-    private final String db = "sds_db";
-    private final String table = "tg_ids";
-    private final String idColumn = "td_id";
-    private final String coachColumn = "coach_id";
-    private final String coachTable = "coaches";
-
-
     private static List<List<String>> coaches = null;
 
     private final Statement stmt;
@@ -41,33 +33,31 @@ public class DatabaseHandler {
 
     public boolean isOnRecord(String id) throws SQLException {
         var exist = stmt.executeQuery("SELECT EXISTS" +
-                "(SELECT * FROM " + table +" WHERE " + idColumn + "=" + id + ")");
+                "(SELECT * FROM tg_ids WHERE td_id=" + id + ")");
         exist.next();
         return exist.getInt(1) != 0;
     }
     public boolean hasThatCoach(String userId, String coachId) throws SQLException {
         var exist = stmt.executeQuery("SELECT EXISTS" +
-                "(SELECT * FROM " + table +" WHERE " + idColumn + "=" + userId + " AND " + coachColumn + "=" + coachId + ")");
+                "(SELECT * FROM tg_ids WHERE td_id=" + userId + " AND coach_id=" + coachId + ")");
         exist.next();
         return exist.getInt(1) != 0;
     }
 
     public void addCoach(String userId, String coachId) throws SQLException {
 
-        stmt.executeUpdate("INSERT INTO " + table +
-                " (" + idColumn + "," +  coachColumn + ") VALUES (" + userId + "," +  coachId + ")");
+        stmt.executeUpdate("INSERT INTO tg_ids (td_id, coach_id) VALUES (" + userId + "," +  coachId + ")");
     }
 
     public void deleteCoach(String userId, String coachId) throws SQLException {
 
-        stmt.executeUpdate("DELETE FROM " + table +
-                " WHERE " + idColumn + "=" + userId + " AND " + coachColumn + "=" + coachId);
+        stmt.executeUpdate("DELETE FROM tg_ids WHERE td_id=" + userId + " AND coach_id=" + coachId);
     }
 
     private List<List<String>> getCoaches() throws SQLException {
         if (coaches == null) {
             coaches = new ArrayList<>();
-            var rs = stmt.executeQuery("SELECT * FROM " + coachTable);
+            var rs = stmt.executeQuery("SELECT * FROM coaches");
             while (rs.next()) {
                 List<String> coach = List.of(
                         rs.getString("nick"),
@@ -79,7 +69,6 @@ public class DatabaseHandler {
         }
         return coaches;
     }
-
     public List<String> getCards() throws SQLException {
         List<String> cards = new ArrayList<>();
         int i = 1;
@@ -100,14 +89,14 @@ public class DatabaseHandler {
         }
         return nicks;
     }
-    public List<String> getSched(String userId) throws SQLException {
-        List<String> sched = new ArrayList<>();
-        var rs = stmt.executeQuery("SELECT * FROM " + table + " WHERE " + idColumn + "=" + userId);
+    public List<String> getSchedule(String userId) throws SQLException {
+        List<String> schedule = new ArrayList<>();
+        var rs = stmt.executeQuery("SELECT * FROM tg_ids WHERE td_id=" + userId);
         getCoaches();
         while (rs.next()) {
             var index = Integer.parseInt(rs.getString("coach_id")) - 1;
-            sched.add(coaches.get(index).get(0) + ":\n\n" + coaches.get(index).get(2));
+            schedule.add(coaches.get(index).get(0) + ":\n\n" + coaches.get(index).get(2));
         }
-        return sched;
+        return schedule;
     }
 }
