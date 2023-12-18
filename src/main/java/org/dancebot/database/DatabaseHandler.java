@@ -10,7 +10,6 @@ import java.util.List;
 
 public class DatabaseHandler {
     private static List<List<String>> coaches = null;
-
     private final Statement stmt;
     private static DatabaseHandler instance = null;
 
@@ -69,17 +68,19 @@ public class DatabaseHandler {
         }
         return coaches;
     }
+    
     public List<String> getCards() throws SQLException {
         List<String> cards = new ArrayList<>();
         int i = 1;
         for (List<String> couch : getCoaches()) {
-            cards.add(i +". " + couch.get(0) + "\n\n»ÌÙ‡:\n\n" +
-                    couch.get(1) + "\n\n–‡ÒÔËÒ‡ÌËÂ:\n\n" +
+            cards.add(i +". " + couch.get(0) + "\n\n–ò–Ω—Ñ–∞:\n\n" +
+                    couch.get(1) + "\n\n–†–∞—Å–ø–∏—Å–∞–Ω–∏–µ:\n\n" +
                     couch.get(2));
             i++;
         }
         return cards;
     }
+    
     public List<String> getNicks() throws SQLException {
         List<String> nicks = new ArrayList<>();
         int i = 1;
@@ -89,6 +90,7 @@ public class DatabaseHandler {
         }
         return nicks;
     }
+    
     public List<String> getSchedule(String userId) throws SQLException {
         List<String> schedule = new ArrayList<>();
         var rs = stmt.executeQuery("SELECT * FROM tg_ids WHERE td_id=" + userId);
