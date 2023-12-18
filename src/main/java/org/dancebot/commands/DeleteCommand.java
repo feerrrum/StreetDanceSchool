@@ -23,8 +23,8 @@ public class DeleteCommand implements TextCommand{
         String coachId = String.valueOf(text.charAt(0));
         if (dbHandler.hasThatCoach(session.getId(), coachId)) {
             dbHandler.deleteCoach(session.getId(), coachId);
-            return new CommandResult("Успешно", ButtonHelper.onRecordStateButtons);
+            return new CommandResult("РЈСЃРїРµС€РЅРѕ", ButtonHelper.onRecordStateButtons);
         }
-        return new CommandResult("Не является вашим тренером", ButtonHelper.onRecordStateButtons);
+        return new CommandResult("РќРµ СЏРІР»СЏРµС‚СЃСЏ РІР°С€РёРј С‚СЂРµРЅРµСЂРѕРј", ButtonHelper.onRecordStateButtons);
     }
 }
