@@ -17,7 +17,7 @@ public class BotApplication {
 
     public static void main(String[] args) throws TelegramApiException, IOException, SQLException {
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
-        var data = Files.readAllLines(new File("C:\\Users\\irina\\id.txt").toPath());
+        var data = Files.readAllLines(new File("C:\\Users\\userName\\id.txt").toPath());
         String token = data.get(0);
         var name = data.get(1);
         var bot = new StreetDanceBot(token, name);
