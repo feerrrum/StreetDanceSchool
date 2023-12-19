@@ -10,11 +10,12 @@ import java.util.List;
 
 public class DatabaseHandler {
     private static List<List<String>> coaches = null;
+
     private final Statement stmt;
     private static DatabaseHandler instance = null;
 
     private DatabaseHandler() throws IOException, SQLException {
-        var data = Files.readAllLines(new File("C:\\Users\\irina\\db.txt").toPath());
+        var data = Files.readAllLines(new File("C:\\Users\\tanno\\dbData.txt").toPath());
         var url = data.get(0);
         var user = data.get(1);
         var password = data.get(2);
@@ -32,25 +33,25 @@ public class DatabaseHandler {
 
     public boolean isOnRecord(String id) throws SQLException {
         var exist = stmt.executeQuery("SELECT EXISTS" +
-                "(SELECT * FROM tg_ids WHERE td_id=" + id + ")");
+                "(SELECT * FROM users WHERE tg_id=" + id + ")");
         exist.next();
         return exist.getInt(1) != 0;
     }
     public boolean hasThatCoach(String userId, String coachId) throws SQLException {
         var exist = stmt.executeQuery("SELECT EXISTS" +
-                "(SELECT * FROM tg_ids WHERE td_id=" + userId + " AND coach_id=" + coachId + ")");
+                "(SELECT * FROM users WHERE tg_id=" + userId + " AND coach_id=" + coachId + ")");
         exist.next();
         return exist.getInt(1) != 0;
     }
 
     public void addCoach(String userId, String coachId) throws SQLException {
 
-        stmt.executeUpdate("INSERT INTO tg_ids (td_id, coach_id) VALUES (" + userId + "," +  coachId + ")");
+        stmt.executeUpdate("INSERT INTO users (tg_id, coach_id) VALUES (" + userId + "," +  coachId + ")");
     }
 
     public void deleteCoach(String userId, String coachId) throws SQLException {
 
-        stmt.executeUpdate("DELETE FROM tg_ids WHERE td_id=" + userId + " AND coach_id=" + coachId);
+        stmt.executeUpdate("DELETE FROM users WHERE tg_id=" + userId + " AND coach_id=" + coachId);
     }
 
     private List<List<String>> getCoaches() throws SQLException {
@@ -68,7 +69,6 @@ public class DatabaseHandler {
         }
         return coaches;
     }
-    
     public List<String> getCards() throws SQLException {
         List<String> cards = new ArrayList<>();
         int i = 1;
@@ -80,7 +80,6 @@ public class DatabaseHandler {
         }
         return cards;
     }
-    
     public List<String> getNicks() throws SQLException {
         List<String> nicks = new ArrayList<>();
         int i = 1;
@@ -90,10 +89,9 @@ public class DatabaseHandler {
         }
         return nicks;
     }
-    
     public List<String> getSchedule(String userId) throws SQLException {
         List<String> schedule = new ArrayList<>();
-        var rs = stmt.executeQuery("SELECT * FROM tg_ids WHERE td_id=" + userId);
+        var rs = stmt.executeQuery("SELECT * FROM users WHERE tg_id=" + userId);
         getCoaches();
         while (rs.next()) {
             var index = Integer.parseInt(rs.getString("coach_id")) - 1;
