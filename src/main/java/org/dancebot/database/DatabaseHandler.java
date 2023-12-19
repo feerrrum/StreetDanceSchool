@@ -15,7 +15,7 @@ public class DatabaseHandler {
     private static DatabaseHandler instance = null;
 
     private DatabaseHandler() throws IOException, SQLException {
-        var data = Files.readAllLines(new File("C:\\Users\\tanno\\dbData.txt").toPath());
+        var data = Files.readAllLines(new File("C:\\Users\\userName\\dbData.txt").toPath());
         var url = data.get(0);
         var user = data.get(1);
         var password = data.get(2);
